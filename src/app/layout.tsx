@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html data-theme={"dracula"} lang="en">
       <body className={`font-sans ${inter.variable}`}>{children}</body>
     </html>
   );

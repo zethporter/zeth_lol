@@ -1,40 +1,113 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { XMarkIcon } from "@heroicons/react/24/solid";
+import { useAtom } from "jotai";
+import { CheckIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { motion } from "framer-motion";
+import clsx from "clsx";
+
+import { teamsAtom } from "./page";
 
 const QuestionModal = ({
   points,
   question,
+  answer,
 }: {
   points: number;
   question: string;
-}) => (
-  <Dialog.Root>
-    <Dialog.Trigger asChild>
-      <button className="glass border-base-300 btn h-full w-full rounded-lg border text-2xl shadow-xl">
+  answer: string;
+}) => {
+  const [open, setOpen] = useState(false);
+  const [answered, setAnswered] = useState(false);
+  const [teams, setTeams] = useAtom(teamsAtom);
+
+  const variants = {
+    notAnswered: { opacity: 1, x: 0, display: "block" },
+    answered: { opacity: 0, x: "-100%", display: "none" },
+  };
+
+  const addPoints = (teamIndex: number) => {
+    const updatedTeams = teams.map((team, i) =>
+      i === teamIndex ? { ...team, score: team.score + points } : team,
+    );
+    setTeams(updatedTeams);
+    setOpen(false);
+  };
+
+  const minusPoints = (teamIndex: number) => {
+    const updatedTeams = teams.map((team, i) =>
+      i === teamIndex ? { ...team, score: team.score - points } : team,
+    );
+    setTeams(updatedTeams);
+  };
+
+  const jeopardyRoot = document
+    ? document.getElementById("jeopardyMain")
+    : null;
+  return (
+    <Dialog.Root open={open}>
+      <div
+        onClick={() => setOpen(true)}
+        className={clsx(
+          "btn glass h-full w-full rounded-lg border border-base-300 text-2xl shadow-xl",
+          answered && "pointer-events-none text-transparent",
+        )}
+      >
         {points}
-      </button>
-    </Dialog.Trigger>
-    <Dialog.Portal>
-      <Dialog.Overlay className="data-[state=open]:animate-overlayShow fixed inset-0 bg-black/80" />
-      <Dialog.Content className="data-[state=open]:animate-contentShow bgfocus:outline-none fixed left-[50%] top-[50%] h-5/6 w-5/6 translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-slate-500">
-        {/* <Dialog.Title className="text-mauve12 m-0 text-[17px] font-medium">
-          Edit profile
-        </Dialog.Title> */}
-        <Dialog.Description className="flex justify-center text-3xl font-bold">
-          {question}
-        </Dialog.Description>
-        {/* <Dialog.Close asChild>
-          <button
-            className="text-violet11 hover:bg-violet4 focus:shadow-violet7 absolute right-[10px] top-[10px] inline-flex h-[25px] w-[25px] appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"
-            aria-label="Close"
+      </div>
+      <Dialog.Portal container={jeopardyRoot}>
+        <Dialog.Overlay
+          onClick={() => setOpen(false)}
+          className="data-[state=open]:animate-overlayShow fixed inset-0 bg-black/80"
+        />
+        <Dialog.Content className="data-[state=open]:animate-contentShow fixed left-[50%] top-[50%] flex h-5/6 w-5/6 translate-x-[-50%] translate-y-[-50%] flex-col gap-4 rounded-box bg-base-200 p-6 focus:outline-none">
+          <div
+            onClick={() => setAnswered(!answered)}
+            className="flex flex-1 items-center justify-center text-center text-4xl"
           >
-            <XMarkIcon />
-          </button>
-        </Dialog.Close> */}
-      </Dialog.Content>
-    </Dialog.Portal>
-  </Dialog.Root>
-);
+            <motion.h1
+              animate={answered ? "answered" : "notAnswered"}
+              variants={variants}
+              className="font-bold text-primary"
+            >
+              {question}
+            </motion.h1>
+            <motion.h1
+              animate={answered ? "notAnswered" : "answered"}
+              variants={variants}
+              className="font-light text-secondary"
+            >
+              {answer}
+            </motion.h1>
+          </div>
+          <div className="divider divider-primary my-0"></div>
+          <div className="flex flex-row justify-center gap-2">
+            {teams.map((team, i) => (
+              <div
+                key={i}
+                className="flex flex-row flex-wrap justify-center gap-1"
+              >
+                <h3 className="w-full text-center text-xl font-semibold">
+                  {team.name}
+                </h3>
+                <div
+                  className="btn btn-square btn-error btn-sm"
+                  onClick={() => minusPoints(i)}
+                >
+                  <XMarkIcon />
+                </div>
+                <div
+                  className="btn btn-square btn-success btn-sm"
+                  onClick={() => addPoints(i)}
+                >
+                  <CheckIcon />
+                </div>
+              </div>
+            ))}
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
+  );
+};
 
 export default QuestionModal;
