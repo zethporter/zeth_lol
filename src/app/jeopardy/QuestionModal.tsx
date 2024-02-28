@@ -5,7 +5,7 @@ import { CheckIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
 import clsx from "clsx";
 
-import { teamsAtom } from "./page";
+import { teamsAtom } from "./GameBoard";
 
 const QuestionModal = ({
   points,

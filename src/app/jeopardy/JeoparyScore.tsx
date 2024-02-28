@@ -1,6 +1,6 @@
 import { useAtomValue } from "jotai";
 import clsx from "clsx";
-import { teamsAtom } from "./page";
+import { teamsAtom } from "./GameBoard";
 
 const JeopardyScores = () => {
   const teams = useAtomValue(teamsAtom);

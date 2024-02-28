@@ -3,7 +3,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { useAtom } from "jotai";
 
 import { teamEditorAtom } from "./JeopardyHeader";
-import { teamsAtom } from "./page";
+import { teamsAtom } from "./GameBoard";
 
 const TeamEditor = () => {
   const [teamEditorState, setTeamEditorState] = useAtom(teamEditorAtom);

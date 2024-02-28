@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import * as ContextMenu from "@radix-ui/react-context-menu";
 import { z } from "zod";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
@@ -7,7 +6,7 @@ import clsx from "clsx";
 
 import JeopardyScores from "./JeoparyScore";
 import TeamEditor from "./TeamEditor";
-import { teamsAtom, type Team, themeAtom } from "./page";
+import { themeAtom, teamsAtom, type Team } from "./GameBoard";
 
 const teamEditor = z.optional(
   z
