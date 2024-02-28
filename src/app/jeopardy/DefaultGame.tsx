@@ -3,19 +3,23 @@ import { z } from "zod";
 export const game = z.object({
   gameTitle: z.string(),
   basePoints: z.number(),
-  topics: z.array(
-    z.object({
-      topicLabel: z.string(),
-      questions: z.array(
-        z.object({
-          question: z.string(),
-          answer: z.string(),
-          points: z.number(),
-        }),
-      ),
-    }),
-  ),
+  topics: z
+    .array(
+      z.object({
+        topicLabel: z.string(),
+        questions: z.array(
+          z.object({
+            question: z.string(),
+            answer: z.string(),
+            points: z.number(),
+          }),
+        ),
+      }),
+    )
+    .max(6)
+    .min(6),
 });
+export type Game = z.infer<typeof game>;
 
 export const defaultGame = {
   gameTitle: "Game Title",

@@ -1,8 +1,9 @@
 import * as ContextMenu from "@radix-ui/react-context-menu";
 import { z } from "zod";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
-import { atom, useSetAtom, useAtomValue, useAtom } from "jotai";
+import { atom, useSetAtom, useAtom } from "jotai";
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
 
 import JeopardyScores from "./JeoparyScore";
 import TeamEditor from "./TeamEditor";
@@ -26,10 +27,11 @@ const MenuClassName =
   "group leading-none text-base-content rounded-btn flex items-center h-8 p-2 relative select-none outline-none data-[disabled]:text-base-content data-[disabled]:pointer-events-none data-[highlighted]:bg-base-200";
 
 const JeopardyHeader = () => {
+  const router = useRouter();
   const [theme, setTheme] = useAtom(themeAtom);
 
   const setTeamEditorState = useSetAtom(teamEditorAtom);
-  const teams = useAtomValue(teamsAtom);
+  const [teams, setTeams] = useAtom(teamsAtom);
 
   const openTeamEditor = () => {
     setTeamEditorState({ index: null, name: "", score: 0 });
@@ -41,6 +43,11 @@ const JeopardyHeader = () => {
       name: team.name,
       score: team.score,
     });
+  };
+
+  const resetScores = () => {
+    const newTeams = teams.map((team) => ({ ...team, score: 0 }));
+    setTeams(newTeams);
   };
 
   return (
@@ -59,7 +66,10 @@ const JeopardyHeader = () => {
           <ContextMenu.Item className={MenuClassName} disabled>
             Reset Game
           </ContextMenu.Item>
-          <ContextMenu.Item className={MenuClassName}>
+          <ContextMenu.Item
+            className={MenuClassName}
+            onClick={() => resetScores()}
+          >
             All teams to Zero
           </ContextMenu.Item>
           <ContextMenu.Sub>
@@ -159,6 +169,12 @@ const JeopardyHeader = () => {
               ))}
             </ContextMenu.SubContent>
           </ContextMenu.Sub>
+          <ContextMenu.Item
+            className={MenuClassName}
+            onClick={() => router.push("/jeopardy/editor")}
+          >
+            Game Editor
+          </ContextMenu.Item>
         </ContextMenu.Content>
       </ContextMenu.Root>
       <TeamEditor />
