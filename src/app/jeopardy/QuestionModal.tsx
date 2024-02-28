@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useAtom } from "jotai";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/solid";
@@ -19,6 +19,11 @@ const QuestionModal = ({
   const [open, setOpen] = useState(false);
   const [answered, setAnswered] = useState(false);
   const [teams, setTeams] = useAtom(teamsAtom);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const variants = {
     notAnswered: { opacity: 1, x: 0, display: "block" },
@@ -40,9 +45,7 @@ const QuestionModal = ({
     setTeams(updatedTeams);
   };
 
-  const jeopardyRoot = document
-    ? document.getElementById("jeopardyMain")
-    : null;
+  if (!isMounted) return null;
   return (
     <Dialog.Root open={open}>
       <div
@@ -54,7 +57,7 @@ const QuestionModal = ({
       >
         {points}
       </div>
-      <Dialog.Portal container={jeopardyRoot}>
+      <Dialog.Portal container={document.getElementById("jeopardyMain")}>
         <Dialog.Overlay
           onClick={() => setOpen(false)}
           className="data-[state=open]:animate-overlayShow fixed inset-0 bg-black/80"

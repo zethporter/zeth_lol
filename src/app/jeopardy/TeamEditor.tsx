@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useAtom } from "jotai";
 
@@ -8,7 +8,11 @@ import { teamsAtom } from "./GameBoard";
 const TeamEditor = () => {
   const [teamEditorState, setTeamEditorState] = useAtom(teamEditorAtom);
   const [teams, setTeams] = useAtom(teamsAtom);
+  const [isMounted, setIsMounted] = useState(false);
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   const closeDialog = () => {
     setTeamEditorState(null);
   };
@@ -36,13 +40,11 @@ const TeamEditor = () => {
     setTeamEditorState(null);
   };
 
-  const jeopardyRoot = document
-    ? document.getElementById("jeopardyMain")
-    : null;
+  if (!isMounted) return null;
 
   return (
     <Dialog.Root open={!!teamEditorState}>
-      <Dialog.Portal container={jeopardyRoot}>
+      <Dialog.Portal container={document.getElementById("jeopardyMain")}>
         <Dialog.Overlay className="data-[state=open]:animate-overlayShow fixed inset-0 bg-base-300/40" />
         <Dialog.Content className="data-[state=open]:animate-contentShow fixed left-[50%] top-[50%] flex max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] flex-col gap-5 rounded-[6px] bg-base-100 p-[25px] shadow-xl focus:outline-none">
           <Dialog.Title className="m-0 text-3xl font-semibold text-primary">
