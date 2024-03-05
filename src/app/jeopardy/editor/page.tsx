@@ -1,5 +1,9 @@
-"use client";
+import EditorForm from "./EditorForm";
 
 export default function Editor() {
-  return <main>Game Editor</main>;
+  return (
+    <main>
+      <EditorForm />
+    </main>
+  );
 }

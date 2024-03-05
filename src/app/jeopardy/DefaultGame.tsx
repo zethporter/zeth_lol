@@ -207,3 +207,190 @@ export const defaultGame = {
     },
   ],
 };
+
+export const gameOutline = {
+  gameTitle: "gameTitle",
+  basePoints: "basePoints",
+  topics: [
+    {
+      topicLabel: "topics.0.topicLabel",
+      questions: [
+        {
+          question: "topics.0.questions.0.question",
+          answer: "topics.0.questions.0.answer",
+          points: "topics.0.questions.0.points",
+        },
+        {
+          question: "topics.0.questions.1.question",
+          answer: "topics.0.questions.1.answer",
+          points: "topics.0.questions.1.points",
+        },
+        {
+          question: "topics.0.questions.2.question",
+          answer: "topics.0.questions.2.answer",
+          points: "topics.0.questions.2.points",
+        },
+        {
+          question: "topics.0.questions.3.question",
+          answer: "topics.0.questions.3.answer",
+          points: "topics.0.questions.3.points",
+        },
+        {
+          question: "topics.0.questions.4.question",
+          answer: "topics.0.questions.4.answer",
+          points: "topics.0.questions.4.points",
+        },
+      ],
+    },
+    {
+      topicLabel: "topics.1.topicLabel",
+      questions: [
+        {
+          question: "topics.1.questions.0.question",
+          answer: "topics.1.questions.0.answer",
+          points: "topics.1.questions.0.points",
+        },
+        {
+          question: "topics.1.questions.1.question",
+          answer: "topics.1.questions.1.answer",
+          points: "topics.1.questions.1.points",
+        },
+        {
+          question: "topics.1.questions.2.question",
+          answer: "topics.1.questions.2.answer",
+          points: "topics.1.questions.2.points",
+        },
+        {
+          question: "topics.1.questions.3.question",
+          answer: "topics.1.questions.3.answer",
+          points: "topics.1.questions.3.points",
+        },
+        {
+          question: "topics.1.questions.4.question",
+          answer: "topics.1.questions.4.answer",
+          points: "topics.1.questions.4.points",
+        },
+      ],
+    },
+    {
+      topicLabel: "topics.2.topicLabel",
+      questions: [
+        {
+          question: "topics.2.questions.0.question",
+          answer: "topics.2.questions.0.answer",
+          points: "topics.2.questions.0.points",
+        },
+        {
+          question: "topics.2.questions.1.question",
+          answer: "topics.2.questions.1.answer",
+          points: "topics.2.questions.1.points",
+        },
+        {
+          question: "topics.2.questions.2.question",
+          answer: "topics.2.questions.2.answer",
+          points: "topics.2.questions.2.points",
+        },
+        {
+          question: "topics.2.questions.3.question",
+          answer: "topics.2.questions.3.answer",
+          points: "topics.2.questions.3.points",
+        },
+        {
+          question: "topics.2.questions.4.question",
+          answer: "topics.2.questions.4.answer",
+          points: "topics.2.questions.4.points",
+        },
+      ],
+    },
+    {
+      topicLabel: "topics.3.topicLabel",
+      questions: [
+        {
+          question: "topics.3.questions.0.question",
+          answer: "topics.3.questions.0.answer",
+          points: "topics.3.questions.0.points",
+        },
+        {
+          question: "topics.3.questions.1.question",
+          answer: "topics.3.questions.1.answer",
+          points: "topics.3.questions.1.points",
+        },
+        {
+          question: "topics.3.questions.2.question",
+          answer: "topics.3.questions.2.answer",
+          points: "topics.3.questions.2.points",
+        },
+        {
+          question: "topics.3.questions.3.question",
+          answer: "topics.3.questions.3.answer",
+          points: "topics.3.questions.3.points",
+        },
+        {
+          question: "topics.3.questions.4.question",
+          answer: "topics.3.questions.4.answer",
+          points: "topics.3.questions.4.points",
+        },
+      ],
+    },
+    {
+      topicLabel: "topics.4.topicLabel",
+      questions: [
+        {
+          question: "topics.4.questions.0.question",
+          answer: "topics.4.questions.0.answer",
+          points: "topics.4.questions.0.points",
+        },
+        {
+          question: "topics.4.questions.1.question",
+          answer: "topics.4.questions.1.answer",
+          points: "topics.4.questions.1.points",
+        },
+        {
+          question: "topics.4.questions.2.question",
+          answer: "topics.4.questions.2.answer",
+          points: "topics.4.questions.2.points",
+        },
+        {
+          question: "topics.4.questions.3.question",
+          answer: "topics.4.questions.3.answer",
+          points: "topics.4.questions.3.points",
+        },
+        {
+          question: "topics.4.questions.4.question",
+          answer: "topics.4.questions.4.answer",
+          points: "topics.4.questions.4.points",
+        },
+      ],
+    },
+    {
+      topicLabel: "topics.5.topicLabel",
+      questions: [
+        {
+          question: "topics.5.questions.0.question",
+          answer: "topics.5.questions.0.answer",
+          points: "topics.5.questions.0.points",
+        },
+        {
+          question: "topics.5.questions.1.question",
+          answer: "topics.5.questions.1.answer",
+          points: "topics.5.questions.1.points",
+        },
+        {
+          question: "topics.5.questions.2.question",
+          answer: "topics.5.questions.2.answer",
+          points: "topics.5.questions.2.points",
+        },
+        {
+          question: "topics.5.questions.3.question",
+          answer: "topics.5.questions.3.answer",
+          points: "topics.5.questions.3.points",
+        },
+        {
+          question: "topics.5.questions.4.question",
+          answer: "topics.5.questions.4.answer",
+          points: "topics.5.questions.4.points",
+        },
+      ],
+    },
+  ],
+};
