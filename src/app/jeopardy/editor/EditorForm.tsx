@@ -1,12 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowDownTrayIcon, PlayIcon } from "@heroicons/react/24/solid";
+import toast from "react-hot-toast";
 
-import { game, type Game } from "../DefaultGame";
+import TopicSection from "./TopicSection";
+import { game, type Game, defaultGame } from "../DefaultGame";
 
 const EditorForm = () => {
+  const [gameJson, setGameJson] = useState<Game>();
   const {
     register,
     handleSubmit,
@@ -15,19 +20,20 @@ const EditorForm = () => {
     formState: { errors },
   } = useForm<Game>({
     resolver: zodResolver(game),
+    values: gameJson,
   });
 
   const updatePoints = () => {
-    const base = getValues("basePoints");
+    const base = getValues("game.basePoints");
     [0, 1, 2, 3, 4, 5].forEach((i) => {
       [0, 1, 2, 3, 4].forEach((j) => {
-        setValue(`topics.${i}.questions.${j}.points`, (j + 1) * base);
+        setValue(`game.topics.${i}.questions.${j}.points`, (j + 1) * base);
       });
     });
   };
 
   const download: SubmitHandler<Game> = (data) => {
-    const fileName = data.gameTitle;
+    const fileName = data.game.gameTitle;
     const json = JSON.stringify(data);
     const blob = new Blob([json], { type: "application/json" }); // blob just as yours
     const href = URL.createObjectURL(blob);
@@ -38,162 +44,118 @@ const EditorForm = () => {
     link.click();
     document.body.removeChild(link);
   };
+  const readJsonFile = (file: Blob) =>
+    new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.onload = (event) => {
+        if (event.target) {
+          resolve(JSON.parse(event.target.result as string));
+        }
+      };
+
+      fileReader.onerror = (error) => reject(error);
+      fileReader.readAsText(file);
+    });
+
+  const uploadFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      // @ts-expect-error because this thing sucks balls. Why should I have to ignore something that works??
+      const parsedData = await readJsonFile(event.target.files[0]);
+
+      console.log(parsedData);
+      try {
+        const tempJson = game.parse(parsedData);
+        setGameJson(tempJson);
+        toast.success("Uploaded Game!");
+      } catch (error) {
+        toast.error("oops something went wrong. Try again.");
+      }
+    }
+  };
 
   return (
     <form className="container mx-auto flex flex-col gap-1 p-2">
-      <label className="form-control w-full">
-        <div className="label">
-          <span className="label-text">Game Title</span>
-        </div>
+      <div className="flex flex-row justify-between gap-2 rounded-box bg-base-300 p-2">
         <input
-          className="input input-bordered"
-          placeholder={"zeth lol jeopardy"}
-          {...register("gameTitle")}
+          type="file"
+          accept=".json,application/json"
+          className="file-input file-input-bordered file-input-secondary w-full"
+          onChange={uploadFile}
         />
-        <div className="label">
-          <ErrorMessage
-            errors={errors}
-            name={"gameTitle"}
-            render={({ message }) => (
-              <span className="label-text-alt text-error">{message}</span>
-            )}
+        <button
+          type="button"
+          onClick={handleSubmit(download)}
+          className="btn btn-accent"
+        >
+          <svg className="h-5 w-5">
+            <PlayIcon />
+          </svg>
+          Set Jeopardy Game
+        </button>
+        <button
+          type="button"
+          onClick={handleSubmit(download)}
+          className="btn btn-primary"
+        >
+          <svg className="h-5 w-5">
+            <ArrowDownTrayIcon />
+          </svg>
+          Download Jeopardy Game
+        </button>
+      </div>
+      <div className="grid grid-cols-4 items-end gap-2">
+        <label className="form-control col-span-3">
+          <div className="label">
+            <span className="label-text">Game Title</span>
+          </div>
+          <input
+            className="input input-bordered"
+            placeholder={"zeth lol jeopardy"}
+            {...register("game.gameTitle")}
           />
-        </div>
-      </label>
-      <label className="form-control w-full">
-        <div className="label">
-          <span className="label-text">Base Points</span>
-          <button
-            type="button"
-            className="btn btn-primary label-text-alt btn-sm"
-            onClick={() => updatePoints()}
-          >
-            Set Values
-          </button>
-        </div>
-        <input
-          className="input input-bordered"
-          placeholder={"100"}
-          {...register("basePoints", { valueAsNumber: true })}
-        />
-        <div className="label">
-          <ErrorMessage
-            errors={errors}
-            name={"basePoints"}
-            render={({ message }) => (
-              <span className="label-text-alt text-error">{message}</span>
-            )}
+          <div className="label">
+            <ErrorMessage
+              errors={errors}
+              name={"game.gameTitle"}
+              render={({ message }) => (
+                <span className="label-text-alt text-error">{message}</span>
+              )}
+            />
+          </div>
+        </label>
+        <label className="form-control">
+          <div className="label">
+            <span className="label-text">Base Points</span>
+            <button
+              type="button"
+              className="btn btn-primary btn-sm"
+              onClick={() => updatePoints()}
+            >
+              Set Values
+            </button>
+          </div>
+          <input
+            className="input input-bordered"
+            placeholder={"100"}
+            {...register("game.basePoints", { valueAsNumber: true })}
           />
-        </div>
-      </label>
+          <div className="label">
+            <ErrorMessage
+              errors={errors}
+              name={"game.basePoints"}
+              render={({ message }) => (
+                <span className="label-text-alt text-error">{message}</span>
+              )}
+            />
+          </div>
+        </label>
+      </div>
       {Array(6)
         .fill(0)
         .map((topic, i) => (
-          <div
-            className="flex w-full flex-col gap-2 rounded-box bg-base-200 p-4"
-            key={i}
-          >
-            <label className="form-control w-full">
-              <div className="label">
-                <span className="label-text">{`Topic ${i + 1} label`}</span>
-              </div>
-              <input
-                className="input input-bordered col-span-full"
-                placeholder={"topic title"}
-                {...register(`topics.${i}.topicLabel`)}
-              />
-              <div className="label">
-                <ErrorMessage
-                  errors={errors}
-                  name={`topic.${i}.topicLabel`}
-                  render={({ message }) => (
-                    <span className="label-text-alt text-error">{message}</span>
-                  )}
-                />
-              </div>
-            </label>
-            {Array(5)
-              .fill(0)
-              .map((question, q) => (
-                <div className="grid grid-cols-5 gap-2" key={q}>
-                  <label className="form-control col-span-2">
-                    <div className="label">
-                      <span className="label-text">{`Topic: ${i + 1}, Question: ${q + 1}`}</span>
-                    </div>
-                    <textarea
-                      rows={1}
-                      className="input input-bordered input-primary pt-2"
-                      placeholder={"question"}
-                      {...register(`topics.${i}.questions.${q}.question`)}
-                    />
-                    <div className="label">
-                      <ErrorMessage
-                        errors={errors}
-                        name={`topics.${i}.questions.${q}.question`}
-                        render={({ message }) => (
-                          <span className="label-text-alt text-error">
-                            {message}
-                          </span>
-                        )}
-                      />
-                    </div>
-                  </label>
-                  <label className="form-control col-span-2">
-                    <div className="label">
-                      <span className="label-text">{`Topic: ${i + 1}, Answer: ${q + 1}`}</span>
-                    </div>
-                    <textarea
-                      rows={1}
-                      className="input input-bordered input-secondary pt-2"
-                      placeholder={"answer"}
-                      {...register(`topics.${i}.questions.${q}.answer`)}
-                    />
-                    <div className="label">
-                      <ErrorMessage
-                        errors={errors}
-                        name={`topics.${i}.questions.${q}.answer`}
-                        render={({ message }) => (
-                          <span className="label-text-alt text-error">
-                            {message}
-                          </span>
-                        )}
-                      />
-                    </div>
-                  </label>
-                  <label className="form-control w-full">
-                    <div className="label">
-                      <span className="label-text">{`Topic: ${i + 1}, Points: ${q + 1}`}</span>
-                    </div>
-                    <input
-                      className="input input-bordered input-accent"
-                      placeholder={`topics.${i}.questions.${q}.points`}
-                      {...register(`topics.${i}.questions.${q}.points`, {
-                        valueAsNumber: true,
-                      })}
-                    />
-                    <div className="label">
-                      <ErrorMessage
-                        errors={errors}
-                        name={`topics.${i}.questions.${q}.points`}
-                        render={({ message }) => (
-                          <span className="label-text-alt text-error">
-                            {message}
-                          </span>
-                        )}
-                      />
-                    </div>
-                  </label>
-                </div>
-              ))}
-          </div>
+          <TopicSection key={i} i={i} errors={errors} register={register} />
         ))}
-      <button
-        type="button"
-        onClick={handleSubmit(download)}
-        className="btn btn-primary"
-      >
-        Download Jeopardy Game
-      </button>
     </form>
   );
 };
