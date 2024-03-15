@@ -1,17 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowDownTrayIcon, PlayIcon } from "@heroicons/react/24/solid";
+import { useSetAtom } from "jotai";
 import toast from "react-hot-toast";
 
 import TopicSection from "./TopicSection";
-import { game, type Game, defaultGame } from "../DefaultGame";
+import { game, type Game } from "../DefaultGame";
+import { gameAtom } from "../GameBoard";
 
 const EditorForm = () => {
   const [gameJson, setGameJson] = useState<Game>();
+  const setGame = useSetAtom(gameAtom);
   const {
     register,
     handleSubmit,
@@ -44,6 +48,7 @@ const EditorForm = () => {
     link.click();
     document.body.removeChild(link);
   };
+
   const readJsonFile = (file: Blob) =>
     new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -74,8 +79,22 @@ const EditorForm = () => {
     }
   };
 
+  const setFormAsGame = (data: Game) => {
+    try {
+      setGame(data);
+      toast.success(
+        "Set Current Values for Game. Return to Game to use this board",
+      );
+    } catch {
+      toast.error("oops something went wrong maybe try again");
+    }
+  };
+
   return (
     <form className="container mx-auto flex flex-col gap-1 p-2">
+      <Link className="link link-primary" href={"/jeopardy"}>
+        Back to Game
+      </Link>
       <div className="flex flex-row justify-between gap-2 rounded-box bg-base-300 p-2">
         <input
           type="file"
@@ -85,7 +104,7 @@ const EditorForm = () => {
         />
         <button
           type="button"
-          onClick={handleSubmit(download)}
+          onClick={handleSubmit(setFormAsGame)}
           className="btn btn-accent"
         >
           <svg className="h-5 w-5">
