@@ -1,3 +1,4 @@
+import { useState } from "react";
 import * as ContextMenu from "@radix-ui/react-context-menu";
 import { z } from "zod";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
@@ -7,7 +8,9 @@ import { useRouter } from "next/navigation";
 
 import JeopardyScores from "./JeoparyScore";
 import TeamEditor from "./TeamEditor";
-import { themeAtom, teamsAtom, type Team } from "./GameBoard";
+import GameUploadModal from "./GameUploadModal";
+import { themeAtom, teamsAtom, type Team, gameMapAtom } from "./GameBoard";
+import { createGameMap } from "~/utils/gameMapping";
 
 const teamEditor = z.optional(
   z
@@ -28,9 +31,11 @@ const MenuClassName =
 
 const JeopardyHeader = () => {
   const router = useRouter();
+  const [gameUploadOpen, setGameUploadOpen] = useState<boolean>(false);
   const [theme, setTheme] = useAtom(themeAtom);
 
   const setTeamEditorState = useSetAtom(teamEditorAtom);
+  const setGameMap = useSetAtom(gameMapAtom);
   const [teams, setTeams] = useAtom(teamsAtom);
 
   const openTeamEditor = () => {
@@ -63,7 +68,16 @@ const JeopardyHeader = () => {
           >
             Add Team
           </ContextMenu.Item>
-          <ContextMenu.Item className={MenuClassName} disabled>
+          <ContextMenu.Item
+            className={MenuClassName}
+            onClick={() => setGameUploadOpen(true)}
+          >
+            Upload Game
+          </ContextMenu.Item>
+          <ContextMenu.Item
+            className={MenuClassName}
+            onClick={() => createGameMap(setGameMap)}
+          >
             Reset Game
           </ContextMenu.Item>
           <ContextMenu.Item
@@ -178,6 +192,7 @@ const JeopardyHeader = () => {
         </ContextMenu.Content>
       </ContextMenu.Root>
       <TeamEditor />
+      <GameUploadModal open={gameUploadOpen} setOpen={setGameUploadOpen} />
     </>
   );
 };
