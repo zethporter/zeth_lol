@@ -15,8 +15,9 @@ type ParticlesProps = {
   minSize?: number;
   maxSize?: number;
   speed?: number;
-  particleColor?: string;
+  particleColor?: string | string[];
   particleDensity?: number;
+  modalOpen: boolean;
 };
 export const SparklesCore = (props: ParticlesProps) => {
   const {
@@ -28,6 +29,7 @@ export const SparklesCore = (props: ParticlesProps) => {
     speed,
     particleColor,
     particleDensity,
+    modalOpen,
   } = props;
   const [init, setInit] = useState(false);
   useEffect(() => {
@@ -40,14 +42,16 @@ export const SparklesCore = (props: ParticlesProps) => {
   const controls = useAnimation();
 
   const particlesLoaded = async (container?: Container) => {
-    if (container) {
-      console.log(container);
-      controls.start({
-        opacity: 1,
-        transition: {
-          duration: 1,
-        },
-      });
+    if (modalOpen) {
+      if (container) {
+        console.log(container);
+        controls.start({
+          opacity: 1,
+          transition: {
+            duration: 1,
+          },
+        });
+      }
     }
   };
 
