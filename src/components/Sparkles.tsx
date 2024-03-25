@@ -44,7 +44,6 @@ export const SparklesCore = (props: ParticlesProps) => {
   const particlesLoaded = async (container?: Container) => {
     if (modalOpen) {
       if (container) {
-        console.log(container);
         controls.start({
           opacity: 1,
           transition: {

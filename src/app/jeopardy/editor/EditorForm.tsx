@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowDownTrayIcon, PlayIcon } from "@heroicons/react/24/solid";
@@ -36,8 +36,8 @@ const EditorForm = () => {
     });
   };
 
-  const download: SubmitHandler<Game> = (data) => {
-    const fileName = data.game.gameTitle;
+  const download = (data: Game) => {
+    const fileName = data.game?.gameTitle;
     const json = JSON.stringify(data);
     const blob = new Blob([json], { type: "application/json" }); // blob just as yours
     const href = URL.createObjectURL(blob);
@@ -68,7 +68,6 @@ const EditorForm = () => {
       // @ts-expect-error because this thing sucks balls. Why should I have to ignore something that works??
       const parsedData = await readJsonFile(event.target.files[0]);
 
-      console.log(parsedData);
       try {
         const tempJson = game.parse(parsedData);
         setGameJson(tempJson);
@@ -91,7 +90,7 @@ const EditorForm = () => {
   };
 
   return (
-    <form className="container mx-auto flex flex-col gap-1 p-2">
+    <div className="container mx-auto flex flex-col gap-1 p-2">
       <Link className="link link-primary" href={"/jeopardy"}>
         Back to Game
       </Link>
@@ -123,59 +122,61 @@ const EditorForm = () => {
           Download Jeopardy Game
         </button>
       </div>
-      <div className="grid grid-cols-4 items-end gap-2">
-        <label className="form-control col-span-3">
-          <div className="label">
-            <span className="label-text">Game Title</span>
-          </div>
-          <input
-            className="input input-bordered"
-            placeholder={"zeth lol jeopardy"}
-            {...register("game.gameTitle")}
-          />
-          <div className="label">
-            <ErrorMessage
-              errors={errors}
-              name={"game.gameTitle"}
-              render={({ message }) => (
-                <span className="label-text-alt text-error">{message}</span>
-              )}
+      <form className="flex flex-col gap-2">
+        <div className="grid grid-cols-4 items-end gap-2">
+          <label className="form-control col-span-3">
+            <div className="label">
+              <span className="label-text">Game Title</span>
+            </div>
+            <input
+              className="input input-bordered"
+              placeholder={"zeth lol jeopardy"}
+              {...register("game.gameTitle")}
             />
-          </div>
-        </label>
-        <label className="form-control">
-          <div className="label">
-            <span className="label-text">Base Points</span>
-            <button
-              type="button"
-              className="btn btn-primary btn-sm"
-              onClick={() => updatePoints()}
-            >
-              Set Values
-            </button>
-          </div>
-          <input
-            className="input input-bordered"
-            placeholder={"100"}
-            {...register("game.basePoints", { valueAsNumber: true })}
-          />
-          <div className="label">
-            <ErrorMessage
-              errors={errors}
-              name={"game.basePoints"}
-              render={({ message }) => (
-                <span className="label-text-alt text-error">{message}</span>
-              )}
+            <div className="label">
+              <ErrorMessage
+                errors={errors}
+                name={"game.gameTitle"}
+                render={({ message }) => (
+                  <span className="label-text-alt text-error">{message}</span>
+                )}
+              />
+            </div>
+          </label>
+          <label className="form-control">
+            <div className="label">
+              <span className="label-text">Base Points</span>
+              <button
+                type="button"
+                className="btn btn-primary btn-sm"
+                onClick={() => updatePoints()}
+              >
+                Set Values
+              </button>
+            </div>
+            <input
+              className="input input-bordered"
+              placeholder={"100"}
+              {...register("game.basePoints", { valueAsNumber: true })}
             />
-          </div>
-        </label>
-      </div>
-      {Array(6)
-        .fill(0)
-        .map((topic, i) => (
-          <TopicSection key={i} i={i} errors={errors} register={register} />
-        ))}
-    </form>
+            <div className="label">
+              <ErrorMessage
+                errors={errors}
+                name={"game.basePoints"}
+                render={({ message }) => (
+                  <span className="label-text-alt text-error">{message}</span>
+                )}
+              />
+            </div>
+          </label>
+        </div>
+        {Array(6)
+          .fill(0)
+          .map((topic, i) => (
+            <TopicSection key={i} i={i} errors={errors} register={register} />
+          ))}
+      </form>
+    </div>
   );
 };
 

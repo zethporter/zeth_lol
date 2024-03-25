@@ -50,7 +50,7 @@ export default function GameBoard() {
     >
       <div className="flex h-full w-full flex-col-reverse gap-2 bg-base-300/75 p-2">
         <div className="container mx-auto grid flex-1 grid-cols-6 gap-2 rounded-xl p-2">
-          {game.game.topics.map((topic, x) => (
+          {game.game?.topics.map((topic, x) => (
             <div key={x} className="grid grid-rows-6 gap-2">
               <div className="flex w-full items-center justify-center rounded-lg bg-accent font-sans text-2xl font-bold text-accent-content">
                 {topic.topicLabel}

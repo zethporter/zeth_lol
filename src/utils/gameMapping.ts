@@ -11,7 +11,7 @@ export const createGameMap = (setGameMap: (e: GameMap) => void) => {
   const dDx = rando(0, 5);
   const dDy = rando(0, 4);
 
-  console.log("x:", dDx, "y:", dDy);
+  console.log("Daily Double Location: {", "x:", dDx, "y:", dDy, "}");
 
   const gameMapping = Array<GameMap>(6)
     .fill([])

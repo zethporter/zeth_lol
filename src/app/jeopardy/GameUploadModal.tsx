@@ -39,7 +39,6 @@ const GameUploadModal = ({
       // @ts-expect-error because this thing sucks balls. Why should I have to ignore something that works??
       const parsedData = await readJsonFile(event.target.files[0]);
 
-      console.log(parsedData);
       try {
         const tempJson = game.parse(parsedData);
         setGame(tempJson);
