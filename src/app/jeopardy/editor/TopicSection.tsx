@@ -1,11 +1,13 @@
 import { useState } from "react";
+import clsx from "clsx";
+import { has as _has } from "lodash";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { type FieldErrors, type UseFormRegister } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { type Game } from "../DefaultGame";
 
 const TopicSection = ({
-  errors,
+  errors = {},
   register,
   i,
 }: {
@@ -18,7 +20,10 @@ const TopicSection = ({
     <Collapsible.Root
       open={open}
       onOpenChange={setOpen}
-      className="flex w-full flex-col gap-2 rounded-box bg-base-200 p-4"
+      className={clsx(
+        "flex w-full flex-col gap-2 rounded-box border bg-base-200 p-4",
+        _has(errors, `game.topics.${i}`) ? "border-error" : "border-base-200",
+      )}
     >
       <div className="flex flex-row items-center gap-2">
         <span className="flex-1 text-xl font-bold">{`Topic ${i + 1} Questions`}</span>
@@ -41,7 +46,7 @@ const TopicSection = ({
           <div className="label">
             <ErrorMessage
               errors={errors}
-              name={`topic.${i}.topicLabel`}
+              name={`game.topics.${i}.topicLabel`}
               render={({ message }) => (
                 <span className="label-text-alt text-error">{message}</span>
               )}

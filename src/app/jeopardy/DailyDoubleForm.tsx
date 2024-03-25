@@ -17,8 +17,9 @@ const DailyDoubleForm = ({
     watch,
     formState: { errors },
   } = useForm<dailyDoubleForm>({
-    defaultValues: {
+    values: {
       teamIndex: 0,
+      bet: 0,
     },
   });
 

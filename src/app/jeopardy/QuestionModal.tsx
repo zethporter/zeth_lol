@@ -55,7 +55,7 @@ const QuestionModal = ({
   };
 
   const variants = {
-    notAnswered: { opacity: 1, x: 0, display: "block" },
+    notAnswered: { opacity: 1, x: 0, display: "flex" },
     answered: { opacity: 0, x: "-100%", display: "none" },
   };
 
