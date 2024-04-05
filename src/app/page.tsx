@@ -1,8 +1,19 @@
 import Link from "next/link";
+import { UserButton, auth } from "@clerk/nextjs";
 
 export default function HomePage() {
+  const { userId }: { userId: string | null } = auth();
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-sky-900 via-blue-900 to-violet-900 text-white">
+      <div className="absolute top-0 flex w-full flex-row justify-end p-4">
+        {userId ? (
+          <UserButton />
+        ) : (
+          <Link href="/sign-in" type="button" className="btn btn-primary">
+            Login
+          </Link>
+        )}
+      </div>
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
         <h1 className="text-5xl font-bold tracking-tight text-white">
           zeth{" "}

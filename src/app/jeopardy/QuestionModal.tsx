@@ -115,12 +115,12 @@ const QuestionModal = ({
             initial={{ y: -20, scale: 0.8 }}
             animate={{ y: 0, scale: 1 }}
             transition={{
-              duration: 0.3,
-              ease: [0, 0.71, 0.2, 1.01],
+              duration: 0.1,
+              ease: [0, 0.71, 0.2, 1],
               scale: {
                 type: "spring",
                 damping: 10,
-                stiffness: 100,
+                stiffness: 170,
                 restDelta: 0.001,
               },
             }}

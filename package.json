@@ -11,6 +11,7 @@
     "outdated": "npm outdated"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.29.11",
     "@heroicons/react": "latest",
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.3.4",
