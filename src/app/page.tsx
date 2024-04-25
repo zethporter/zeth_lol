@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { UserButton, auth } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 
 export default function HomePage() {
   const { userId }: { userId: string | null } = auth();
