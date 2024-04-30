@@ -185,6 +185,12 @@ const JeopardyHeader = () => {
           </ContextMenu.Sub>
           <ContextMenu.Item
             className={MenuClassName}
+            onClick={() => router.push("/jeopardy/my-games")}
+          >
+            My Games
+          </ContextMenu.Item>
+          <ContextMenu.Item
+            className={MenuClassName}
             onClick={() => router.push("/jeopardy/editor")}
           >
             Game Editor

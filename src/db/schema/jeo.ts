@@ -90,6 +90,4 @@ export const insertGamesSchema = createInsertSchema(jeoGames);
 // Schema for selecting a user - can be used to validate API responses
 export const selectGamesSchema = createSelectSchema(jeoGames);
 
-const partialInsertGameSchema = insertGamesSchema.partial();
-
-export type GameZod = z.infer<typeof partialInsertGameSchema>;
+export type GameZod = z.infer<typeof insertGamesSchema>;

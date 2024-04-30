@@ -3,6 +3,9 @@ import { z } from "zod";
 export const game = z
   .object({
     game: z.object({
+      id: z.number().optional(),
+      public: z.boolean().optional(),
+      userId: z.string().optional(),
       gameTitle: z.string(),
       basePoints: z.number(),
       topics: z
@@ -29,6 +32,9 @@ export const defaultGame = {
   game: {
     gameTitle: "Game Title",
     basePoints: 100,
+    userId: "none",
+    public: true,
+    id: 1,
     topics: [
       {
         topicLabel: "topic One",

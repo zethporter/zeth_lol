@@ -1,11 +1,11 @@
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 import { createSelectSchema } from "drizzle-zod";
 
-export const validated = sqliteTable("cities", {
-  id: integer("id").primaryKey(),
+export const validated = sqliteTable("validated", {
+  userId: text("userId").primaryKey(),
   name: text("name"),
-  userId: text("userId"),
   valid: integer("valid", { mode: "boolean" }),
+  special: integer("special", { mode: "boolean" }),
 });
 
 export const selectGamesSchema = createSelectSchema(validated);
