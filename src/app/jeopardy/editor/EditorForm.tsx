@@ -7,7 +7,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowDownTrayIcon, PlayIcon } from "@heroicons/react/24/solid";
 import { useSetAtom } from "jotai";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 import TopicSection from "./TopicSection";
 import { game, type Game } from "../DefaultGame";

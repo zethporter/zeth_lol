@@ -1,11 +1,9 @@
 "use client";
 import { useEffect } from "react";
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { atomWithStorage } from "jotai/utils";
 import { z } from "zod";
 import { type Game, game, defaultGame } from "./DefaultGame";
 import { AnimatePresence } from "framer-motion";
-import { Toaster } from "react-hot-toast";
 
 import { createGameMap } from "~/utils/gameMapping";
 import QuestionModal from "./QuestionModal";
@@ -24,7 +22,6 @@ const team = z.object({
 
 export type Team = z.infer<typeof team>;
 
-export const themeAtom = atomWithStorage<string>("theme", "dark");
 export const teamsAtom = atom<Team[]>([
   { name: "Team 1", score: 0 },
   { name: "Team 2", score: 0 },
@@ -46,7 +43,6 @@ export default function GameBoard({
 }) {
   const game = useAtomValue(gameAtom);
   const setGameMap = useSetAtom(gameMapAtom);
-  const theme = useAtomValue(themeAtom);
 
   useEffect(() => {
     createGameMap(setGameMap);
@@ -57,7 +53,6 @@ export default function GameBoard({
     <AnimatePresence>
       <section
         id="jeopardyMain"
-        data-theme={theme}
         className="h-screen w-full bg-gradient-to-br from-primary via-accent via-85% to-secondary"
       >
         <div className="flex h-full w-full flex-col-reverse gap-2 bg-base-300/75 p-2">
@@ -83,7 +78,6 @@ export default function GameBoard({
           <JeopardyHeader />
         </div>
       </section>
-      <Toaster />
       <CMDK />
     </AnimatePresence>
   );

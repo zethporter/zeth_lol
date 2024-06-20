@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Command } from "cmdk";
 import * as Dialog from "@radix-ui/react-dialog";
 
 const CMDK = () => {
   const [open, setOpen] = useState<boolean>(false);
+  const router = useRouter();
 
   // Toggle the menu when ⌘K is pressed
   useEffect(() => {
@@ -42,20 +44,20 @@ const CMDK = () => {
               <Command.List>
                 <Command.Empty>No results found.</Command.Empty>
 
-                <Command.Group heading="Letters">
-                  <Command.Item className="data-[selected=true]:text-primary">
-                    a
+                <Command.Group heading="Pages">
+                  <Command.Item
+                    onSelect={() => router.push("/jeopardy/my-games")}
+                    className="data-[selected=true]:text-primary"
+                  >
+                    My Games
                   </Command.Item>
-                  <Command.Item className="data-[selected=true]:text-primary">
-                    b
-                  </Command.Item>
-                  <Command.Separator />
-                  <Command.Item className="data-[selected=true]:text-primary">
-                    c
+                  <Command.Item
+                    onSelect={() => router.push("/jeopardy/editor")}
+                    className="data-[selected=true]:text-primary"
+                  >
+                    Game Editor
                   </Command.Item>
                 </Command.Group>
-
-                <Command.Item>Apple</Command.Item>
               </Command.List>
             </Command>
           </motion.div>

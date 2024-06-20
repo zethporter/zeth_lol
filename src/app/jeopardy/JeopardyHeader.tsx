@@ -9,7 +9,8 @@ import { useRouter } from "next/navigation";
 import JeopardyScores from "./JeoparyScore";
 import TeamEditor from "./TeamEditor";
 import GameUploadModal from "./GameUploadModal";
-import { themeAtom, teamsAtom, type Team, gameMapAtom } from "./GameBoard";
+import { teamsAtom, type Team, gameMapAtom } from "./GameBoard";
+import { themeAtom } from "./ThemeContainer";
 import { createGameMap } from "~/utils/gameMapping";
 
 const teamEditor = z.optional(

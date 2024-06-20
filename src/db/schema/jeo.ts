@@ -5,7 +5,7 @@ import {
   uniqueIndex,
 } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { z } from "zod";
+import { type z } from "zod";
 
 export const jeoGames = sqliteTable(
   "jeoGames",
@@ -13,9 +13,10 @@ export const jeoGames = sqliteTable(
     id: integer("id").primaryKey(),
     userId: text("userId"),
     public: integer("public", { mode: "boolean" }),
+    publicId: text("publicId"),
     gameTitle: text("gameTitle"),
     basePoints: integer("basePoints"),
-    topicLabel1: text("topicLabelOne"),
+    topicLabel1: text("topicLabel1"),
     topic1Question1: text("topic1Question1"),
     topic1Question2: text("topic1Question2"),
     topic1Question3: text("topic1Question3"),
@@ -26,7 +27,7 @@ export const jeoGames = sqliteTable(
     topic1Answer3: text("topic1Answer3"),
     topic1Answer4: text("topic1Answer4"),
     topic1Answer5: text("topic1Answer5"),
-    topicLabel2: text("topicLabelOne"),
+    topicLabel2: text("topicLabel2"),
     topic2Question1: text("topic2Question1"),
     topic2Question2: text("topic2Question2"),
     topic2Question3: text("topic2Question3"),
@@ -37,7 +38,7 @@ export const jeoGames = sqliteTable(
     topic2Answer3: text("topic2Answer3"),
     topic2Answer4: text("topic2Answer4"),
     topic2Answer5: text("topic2Answer5"),
-    topicLabel3: text("topicLabelOne"),
+    topicLabel3: text("topicLabel3"),
     topic3Question1: text("topic3Question1"),
     topic3Question2: text("topic3Question2"),
     topic3Question3: text("topic3Question3"),
@@ -48,7 +49,7 @@ export const jeoGames = sqliteTable(
     topic3Answer3: text("topic3Answer3"),
     topic3Answer4: text("topic3Answer4"),
     topic3Answer5: text("topic3Answer5"),
-    topicLabel4: text("topicLabelOne"),
+    topicLabel4: text("topicLabel4"),
     topic4Question1: text("topic4Question1"),
     topic4Question2: text("topic4Question2"),
     topic4Question3: text("topic4Question3"),
@@ -59,7 +60,7 @@ export const jeoGames = sqliteTable(
     topic4Answer3: text("topic4Answer3"),
     topic4Answer4: text("topic4Answer4"),
     topic4Answer5: text("topic4Answer5"),
-    topicLabel5: text("topicLabelOne"),
+    topicLabel5: text("topicLabel5"),
     topic5Question1: text("topic5Question1"),
     topic5Question2: text("topic5Question2"),
     topic5Question3: text("topic5Question3"),
@@ -70,7 +71,7 @@ export const jeoGames = sqliteTable(
     topic5Answer3: text("topic5Answer3"),
     topic5Answer4: text("topic5Answer4"),
     topic5Answer5: text("topic5Answer5"),
-    topicLabel6: text("topicLabelOne"),
+    topicLabel6: text("topicLabel6"),
     topic6Question1: text("topic6Question1"),
     topic6Question2: text("topic6Question2"),
     topic6Question3: text("topic6Question3"),

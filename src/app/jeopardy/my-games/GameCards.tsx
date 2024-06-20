@@ -1,10 +1,25 @@
 "use client";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { useUser } from "@clerk/nextjs";
+import ky from "ky";
+import { toast } from "sonner";
+
 import { type gameCardType } from "./page";
+
+const handleAdd = async (userId: string) => {
+  try {
+    await ky.post("/api/jeo-games", { json: { userId } }).json();
+    toast.success("Game added!");
+  } catch (error) {
+    console.error(error);
+    toast.error("Oops, something went wrong.");
+  }
+};
 
 export default function GameCards({ games }: { games: gameCardType }) {
   const [search, setSearch] = useState("");
+  const { user } = useUser();
 
   return (
     <div className="container mx-auto grid grid-cols-1 gap-2 md:grid-cols-3">
@@ -43,7 +58,11 @@ export default function GameCards({ games }: { games: gameCardType }) {
               <h2 className="card-title">{game.name}</h2>
               <p>{`Last edited: ${game.lastEdited.toLocaleDateString()}`}</p>
               <div className="card-actions justify-end">
-                <button className="btn btn-sm bg-gradient-to-tr from-accent from-40% to-secondary text-accent-content hover:from-5% hover:text-secondary-content">
+                <button
+                  type="button"
+                  onClick={() => toast.success("test")}
+                  className="btn btn-sm bg-gradient-to-tr from-accent from-40% to-secondary text-accent-content hover:from-5% hover:text-secondary-content"
+                >
                   Edit
                 </button>
                 <button className="btn btn-sm bg-gradient-to-tr from-primary from-40% to-secondary text-primary-content hover:from-5% hover:text-secondary-content">
@@ -53,6 +72,14 @@ export default function GameCards({ games }: { games: gameCardType }) {
             </div>
           </div>
         ))}
+      <div
+        onClick={() =>
+          user ? handleAdd(user.id) : toast.error("Are you logged in?")
+        }
+        className="btn glass flex h-full items-center justify-center rounded-box"
+      >
+        Add
+      </div>
     </div>
   );
 }

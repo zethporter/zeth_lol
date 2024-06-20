@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useSetAtom } from "jotai";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 import { gameAtom } from "./GameBoard";
 import { game } from "./DefaultGame";
