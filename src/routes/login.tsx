@@ -31,10 +31,10 @@ function RouteComponent() {
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Welcome to Wrestler of the Day</CardTitle>
+          <CardTitle>Welcome to Zeth.lol</CardTitle>
           <CardDescription>Sign in to continue</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex flex-col gap-2">
           <Button
             onClick={handleGoogleSignIn}
             variant="outline"
@@ -72,6 +72,25 @@ function RouteComponent() {
               </g>
             </svg>
             Sign in with Google
+          </Button>
+          <Button
+            onClick={handleMicrosoftSignIn}
+            variant="outline"
+            size="lg"
+            className="w-full"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              xmlSpace="preserve"
+              viewBox="0 0 512 512"
+            >
+              <path d="M0 0h512v512H0z" fill="transparent" />
+              <path d="M22.3 22.3h222.6v222.6H22.3z" fill="#f35325" />
+              <path d="M267.1 22.3h222.6v222.6H267.1z" fill="#81bc06" />
+              <path d="M22.3 267.1h222.6v222.6H22.3z" fill="#05a6f0" />
+              <path d="M267.1 267.1h222.6v222.6H267.1z" fill="#ffba08" />
+            </svg>
+            Sign in with Microsoft
           </Button>
         </CardContent>
       </Card>

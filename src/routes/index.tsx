@@ -16,7 +16,7 @@ function App() {
         >
           Zeth.lol
         </AuroraText>
-        <Link to="/">
+        <Link to="/jeopardy">
           <Button variant="default" size="lg">
             Jeopardy <ChevronRight />
           </Button>
