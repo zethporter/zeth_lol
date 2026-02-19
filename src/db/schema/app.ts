@@ -1,6 +1,10 @@
 import { sql } from "drizzle-orm";
 import { sqliteTable, text, int } from "drizzle-orm/sqlite-core";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import {
+  createInsertSchema,
+  createSelectSchema,
+  createUpdateSchema,
+} from "drizzle-zod";
 import { v7 as uuid } from "uuid";
 
 export const zeoGames = sqliteTable("zeo_games", {
@@ -15,6 +19,7 @@ export const zeoGames = sqliteTable("zeo_games", {
 });
 export const zeoGamesSelectSchema = createSelectSchema(zeoGames);
 export const zeoGamesInsertSchema = createInsertSchema(zeoGames);
+export const zeoGamesUpdateSchema = createUpdateSchema(zeoGames);
 
 export const zeoCategories = sqliteTable("zeo_categories", {
   id: text("id")
@@ -25,6 +30,7 @@ export const zeoCategories = sqliteTable("zeo_categories", {
 });
 export const zeoCategoriesSelectSchema = createSelectSchema(zeoCategories);
 export const zeoCategoriesInsertSchema = createInsertSchema(zeoCategories);
+export const zeoCategoriesUpdateSchema = createUpdateSchema(zeoCategories);
 
 export const zeoRounds = sqliteTable("zeo_rounds", {
   id: text("id")
@@ -54,6 +60,7 @@ export const zeoRounds = sqliteTable("zeo_rounds", {
 });
 export const zeoRoundsSelectSchema = createSelectSchema(zeoRounds);
 export const zeoRoundsInsertSchema = createInsertSchema(zeoRounds);
+export const zeoRoundsUpdateSchema = createUpdateSchema(zeoRounds);
 
 export const zeoClues = sqliteTable("zeo_clues", {
   id: text("id")
@@ -62,6 +69,7 @@ export const zeoClues = sqliteTable("zeo_clues", {
 });
 export const zeoCluesSelectSchema = createSelectSchema(zeoClues);
 export const zeoCluesInsertSchema = createInsertSchema(zeoClues);
+export const zeoCluesUpdateSchema = createUpdateSchema(zeoClues);
 
 export const zeoTags = sqliteTable("zeo_tags", {
   id: int("id").primaryKey({ autoIncrement: true }),
@@ -79,6 +87,7 @@ export const zeoTags = sqliteTable("zeo_tags", {
 });
 export const zeoTagsSelectSchema = createSelectSchema(zeoTags);
 export const zeoTagsInsertSchema = createInsertSchema(zeoTags);
+export const zeoTagsUpdateSchema = createUpdateSchema(zeoTags);
 
 export const zeoShared = sqliteTable("zeo_shared", {
   id: int("id").primaryKey({ autoIncrement: true }),
@@ -91,3 +100,4 @@ export const zeoShared = sqliteTable("zeo_shared", {
 });
 export const zeoSharedSelectSchema = createSelectSchema(zeoShared);
 export const zeoSharedInsertSchema = createInsertSchema(zeoShared);
+export const zeoSharedUpdateSchema = createUpdateSchema(zeoShared);
